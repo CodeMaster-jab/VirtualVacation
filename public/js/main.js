@@ -4,11 +4,10 @@ $(document).ready(() => {
     modal: true,
     height: "auto",
     width: "auto",
-    resizable: false,
+    resizable: false
   });
 });
-function submitInput(){
-  
+function submitInput() {
   $('#results').empty();
   console.log("HERE");
   const ruralurban = $('#locale').val();
@@ -34,7 +33,7 @@ function submitInput(){
     people: people,
     effort: effort,
     expensive: expensive
-  }
+  };
   $.post('/api/places', obj)
     .then((res) => {
       const destinations = res.map(location => {
@@ -66,5 +65,6 @@ function submitInput(){
 function showPreview(img) {
   const src = $(img).data('preview');
   $('#bigPicture').attr('src', src);
+  $('#preview').dialog('option', 'title', $(img).prop('title'));
   $('#preview').dialog('open');
 }

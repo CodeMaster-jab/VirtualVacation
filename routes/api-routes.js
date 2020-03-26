@@ -50,7 +50,7 @@ module.exports = function (app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id,
+        id: req.user.id
       });
     }
   });
@@ -67,10 +67,10 @@ module.exports = function (app) {
       params: {
         lang: 'en',
         show: 'webcams:image,location',
-      },
+      }
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         res.json(response.data.result.webcams);
       })
       .catch((error) => {
@@ -79,7 +79,7 @@ module.exports = function (app) {
   });
 
   app.post('/api/places', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.tripchoice.findAll({
       where: {
         ruralurban: req.body.ruralurban,
@@ -93,5 +93,4 @@ module.exports = function (app) {
         res.json(result);
       });
   });
-
 };
