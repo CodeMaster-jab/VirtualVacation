@@ -62,7 +62,7 @@ module.exports = function (app) {
       headers: {
         'content-type': 'application/octet-stream',
         'x-rapidapi-host': 'webcamstravel.p.rapidapi.com',
-        'x-rapidapi-key': config.apikey,
+        'x-rapidapi-key': process.env.apikey,
       },
       params: {
         lang: 'en',
