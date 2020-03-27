@@ -6,6 +6,9 @@ $(document).ready(() => {
     width: "auto",
     resizable: false
   });
+  $('.navbar-burger').click(function(){
+    $('#navbarBasicExample').toggle().addClass('is-active');
+  });
 });
 function submitInput() {
   $('#results').empty();
