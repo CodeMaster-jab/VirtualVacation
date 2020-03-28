@@ -50,7 +50,11 @@ function submitInput() {
     })
     .then((dest) => {
       Promise.all( dest ).then(results => {
-        console.log('Send to /api/results/: ', results);
+        // console.log('Send to /api/results/: ', results);
+        if (dest.length === 0) {
+          alert_msg('','Sorry, No destinations were found.  Please try again.',true,1);
+          return false;
+        }
         results.forEach( location => {
           $('#results').append($('<h2 class="subtitle">').text(location.name));
           for (let x = 0; x < location.images.length; x++) {
@@ -70,4 +74,49 @@ function showPreview(img) {
   $('#bigPicture').attr('src', src);
   $('#preview').dialog('option', 'title', $(img).prop('title'));
   $('#preview').dialog('open');
+}
+function alert_msg(title, text, mode, level) {
+  $("<div id='alertMessage'></div>").dialog({
+    autoOpen: false,
+    modal: mode,
+    height: 'auto',
+    width: 500,
+    resizable: false,
+    buttons: {
+      OK: function () {
+        $(this).dialog('destroy');
+        return false;
+      }
+    }
+  });
+  if (title === '') {
+    $('#alertMessage').dialog('option', 'dialogClass', 'noTitle');
+  } else {
+    $('#alertMessage').dialog('option', 'title', title);
+  }
+  switch (level) {
+    case 0:
+      $('[aria-describedby="alertMessage"]').css('border', '4px solid royalblue');
+      $('#alertMessage').html(
+        `<img src="./assets/images/info.png" style="float: left; padding-right: 10px"/> <p style="font-size: medium; font-weight: bold">${  text  }</p>`);
+      break;
+    case 1:
+      $('.ui-widget.ui-widget-content.ui-dialog [aria-describedby="alertMessage"]').css('border', '4px solid gold');
+      $('[aria-describedby="alertMessage"]').css('border', '4px solid gold');
+      $('#alertMessage').html(
+        `<img src="./assets/images/warn.png" style="float: left; padding-right: 10px"/> <p style="font-size: medium; font-weight: bold">${  text  }</p>`);
+      break;
+    case 2:
+      $('[aria-describedby="alertMessage"]').css('border', '4px solid red');
+      $('#alertMessage').html(
+        `<img src="./assets/images/error.png" style="float: left; padding-right: 10px"/> <p style="font-size: medium; font-weight: bold">${  text  }</p>`);
+      break;
+    default:
+      $('[aria-describedby="alertMessage"]').css('border', '4px solid royalblue');
+      $('#alertMessage').html(
+        `<img src="./assets/images/confirm.png" style="float: left; padding-right: 10px"/> <p style="font-size: medium; font-weight: bold">${  text  }</p>`);
+      break;
+  }
+  $('#alertMessage').dialog('open');
+  return false;
 }
